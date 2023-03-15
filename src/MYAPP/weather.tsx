@@ -34,6 +34,11 @@ function Weather(): JSX.Element {
                 .map((item: any, index: number) => ({
                     date: item.dt_txt.split(" ")[0],
                     temperature: item.main.temp,
+                    humidity: item.main.humidity,
+                    pressure: item.main.pressure,
+                    description: item.weather[0].description,
+                    main: item.weather[0].main,
+                    speed: item.wind.speed,
                     icon: `https://openweathermap.org/img/w/${item.weather[0].icon}.png`,
                     index
                 }));
@@ -63,24 +68,31 @@ function Weather(): JSX.Element {
                 marginTop: '40px'
             }}><Spin size="large" /></div>}
             {forecastData.length > 0 && (
-                <div>
+                <>
                     <List
                         grid={{
                             gutter: 16,
                             xs: 1,
                             sm: 2,
-                            md: 2,
-                            lg: 5,
+                            md: 3,
+                            lg: 4,
                             xl: 5,
                             xxl: 5,
                         }}
                         dataSource={forecastData}
+
                         renderItem={(item) => (
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                borderRadius: '30px'
+                            }}>
                                 <Cards item={item} />
+                            </div>
                         )}
                     />
                     <Chart data={historicalData || []} />
-                </div>
+                </>
             )}
         </WeatherStyle>
     )

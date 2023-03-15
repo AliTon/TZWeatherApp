@@ -6,7 +6,7 @@ export const HeaderStyle = styled.div`
   left: 0;
   height: 100px;
   width: 100%;
-  //background: white;
+  background: black;
   z-index: 1;
   padding: 0 10px 0 10px;
   display: flex;
