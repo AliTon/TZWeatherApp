@@ -15,6 +15,9 @@ function Weather(): JSX.Element {
     const apiKey = process.env.REACT_APP_API_KEY
 
     const handleSearchClick = async (city: string): Promise<void> => {
+        if(error){
+            setError(false)
+        }
         try {
             setLoading(true);
 
@@ -65,6 +68,8 @@ function Weather(): JSX.Element {
             }));
             setHistoricalData(historicalWeatherData);
         } catch (error) {
+            setHistoricalData([]);
+            setForecastData([]);
             setError(true)
             console.log(error, ">>>>>>>>>>>>>>>>>>>>>>>");
         } finally {
@@ -86,32 +91,41 @@ function Weather(): JSX.Element {
                 </div>
                 :
                 <>
-                    {forecastData.length > 0 && (
-                        <List
-                            grid={{
-                                gutter: 16,
-                                xs: 1,
-                                sm: 2,
-                                md: 3,
-                                lg: 4,
-                                xl: 5,
-                                xxl: 5,
-                            }}
-                            dataSource={forecastData}
+                    {
+                        error ? <div style={{
+                            fontSize: '24px',
+                            fontWeight: 700,
+                            color: 'red'
+                        }}>Something want wrong!!!</div> : <>
+                            {forecastData.length > 0 && (
+                                <List
+                                    grid={{
+                                        gutter: 16,
+                                        xs: 1,
+                                        sm: 2,
+                                        md: 3,
+                                        lg: 4,
+                                        xl: 5,
+                                        xxl: 5,
+                                    }}
+                                    dataSource={forecastData}
 
-                            renderItem={(item) => (
-                                <div style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                }}>
-                                    <Card item={item}/>
-                                </div>
+                                    renderItem={(item) => (
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                        }}>
+                                            <Card item={item}/>
+                                        </div>
+                                    )}
+                                />
                             )}
-                        />
-                    )}
-                    {historicalData.length > 0 && (
-                        <Chart data={historicalData || []}/>
-                    )}
+                            {historicalData.length > 0 && (
+                                <Chart data={historicalData || []}/>
+                            )}
+                        </>
+                    }
+
                 </>
 
             }
