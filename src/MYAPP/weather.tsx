@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {List, Spin} from 'antd'
 import Chart from './components/Chart'
-import Cards from './components/Cards'
+import Card from './components/Card'
 import Search from "./components/Search";
 import {WeatherStyle} from "./Weather.styles";
 import {IForecastData, IHistoricalData} from "../modules/Weather";
@@ -9,6 +9,7 @@ import {IForecastData, IHistoricalData} from "../modules/Weather";
 
 function Weather(): JSX.Element {
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(false)
     const [forecastData, setForecastData] = useState<IForecastData[]>([])
     const [historicalData, setHistoricalData] = useState<IHistoricalData[]>([])
     const apiKey = process.env.REACT_APP_API_KEY
@@ -64,59 +65,57 @@ function Weather(): JSX.Element {
             }));
             setHistoricalData(historicalWeatherData);
         } catch (error) {
-            console.error(error);
+            setError(true)
+            console.log(error, ">>>>>>>>>>>>>>>>>>>>>>>");
         } finally {
             setLoading(false);
         }
     };
 
 
-
-
-    useEffect(() => {
-        if (forecastData.length > 0 && historicalData.length > 0) {
-            console.log('Historical data:', historicalData)
-        }
-    }, [forecastData, historicalData])
-
-    console.log(historicalData, ">>>>>>>>>>>>>>>>> historicalData")
-
-
     return (
         <WeatherStyle>
             <Search handleSearchClick={handleSearchClick}/>
-            {loading && <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginTop: '40px'
-            }}><Spin size="large" /></div>}
-            {forecastData.length > 0 && (
-                <List
-                    grid={{
-                        gutter: 16,
-                        xs: 1,
-                        sm: 2,
-                        md: 3,
-                        lg: 4,
-                        xl: 5,
-                        xxl: 5,
-                    }}
-                    dataSource={forecastData}
+            {loading ?
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginTop: '40px'
+                }}>
+                    <Spin size="large"/>
+                </div>
+                :
+                <>
+                    {forecastData.length > 0 && (
+                        <List
+                            grid={{
+                                gutter: 16,
+                                xs: 1,
+                                sm: 2,
+                                md: 3,
+                                lg: 4,
+                                xl: 5,
+                                xxl: 5,
+                            }}
+                            dataSource={forecastData}
 
-                    renderItem={(item) => (
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            borderRadius: '30px'
-                        }}>
-                            <Cards item={item}/>
-                        </div>
+                            renderItem={(item) => (
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                }}>
+                                    <Card item={item}/>
+                                </div>
+                            )}
+                        />
                     )}
-                />
-            )}
-            {historicalData.length > 0 && (
-                <Chart data={historicalData || []}/>
-            )}
+                    {historicalData.length > 0 && (
+                        <Chart data={historicalData || []}/>
+                    )}
+                </>
+
+            }
+
         </WeatherStyle>
     )
 }

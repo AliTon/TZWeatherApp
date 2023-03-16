@@ -11,7 +11,7 @@ export const formatDateIfExists = (date?: string) => {
 export const tempConvertor = (temp: number, type: boolean) => {
     if(temp){
         if(!type){
-            const fahrenheit = (+(temp * 1.8 + 32).toFixed(2) / 100) * 100;
+            const fahrenheit = parseFloat((temp * 1.8 + 32).toFixed(2)).toString();
             return +`${fahrenheit}`;
         } else {
             return +`${temp}`;

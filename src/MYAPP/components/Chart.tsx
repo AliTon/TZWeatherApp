@@ -21,7 +21,6 @@ interface IProps {
 }
 
 const Chart: React.FC<IProps> = ({data = []}) => {
-    console.log(data, ">>>>>>>>>>>>>>>>>>>>>>>>data")
     const tempType = useAppSelector(selectTempType)
 
     const dataAdapter = useCallback((data: HistoricalData[]) => {
@@ -33,11 +32,13 @@ const Chart: React.FC<IProps> = ({data = []}) => {
         })
     }, [tempType])
 
-    console.log(dataAdapter(data), ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>dataAdapter(data)")
-    console.log(data, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>(data)")
-
     return (
-        <div style={{display: 'flex', justifyContent: 'center', background: 'white'}}>
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            background: 'white',
+            paddingTop: '24px'
+        }}>
             {data.length > 0 && (
                 <LineChart width={600} height={400} data={dataAdapter(data)}>
                     <CartesianGrid strokeDasharray="3 3"/>

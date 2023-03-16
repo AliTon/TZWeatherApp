@@ -1,30 +1,42 @@
 import React, { useState } from 'react';
-import {SearchStyle} from "./Search.style";
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { SearchStyle } from './Search.style';
 
 interface IProps {
-    handleSearchClick: any;
+    handleSearchClick: (city: string) => void;
 }
 
+type FormData = {
+    city: string;
+};
+
 const Search: React.FC<IProps> = ({ handleSearchClick }) => {
-    const [city, setCity] = useState('');
+    const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const [previousValue, setPreviousValue] = useState<string>("");
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setCity(event.target.value);
-    };
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        handleSearchClick(city);
+    const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
+        if (data.city !== previousValue) {
+            setPreviousValue(data.city);
+            handleSearchClick(data.city);
+        }
     };
 
     return (
         <SearchStyle>
-            <form onSubmit={handleSubmit} className="twitter-search-input">
+            <form onSubmit={handleSubmit(onSubmit)} className="twitter-search-input">
                 <svg viewBox="0 0 24 24">
-                    <path
-                        d="M15.7 14.3l6 6-1.4 1.4-6-6v-.9l-.3-.3a8 8 0 1 1 1.4-1.4l.3.3h.9zM4 10a6 6 0 1 0 12 0 6 6 0 0 0-12 0z"></path>
+                    <path d="M15.7 14.3l6 6-1.4 1.4-6-6v-.9l-.3-.3a8 8 0 1 1 1.4-1.4l.3.3h.9zM4 10a6 6 0 1 0 12 0 6 6 0 0 0-12 0z"></path>
                 </svg>
-                <input type="text" placeholder="Search City..." value={city} onChange={handleInputChange}/>
+                <Controller
+                    control={control}
+                    name="city"
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                        <input type="text" placeholder="Search City..." {...field} />
+                    )}
+                />
+                {errors.city && <span>This field is required</span>}
+                <button type="submit">Search</button>
             </form>
         </SearchStyle>
     );
