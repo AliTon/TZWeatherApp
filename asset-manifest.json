@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/TZWeatherApp/static/css/main.fb35d48d.css",
-    "main.js": "/TZWeatherApp/static/js/main.fa74e791.js",
+    "main.js": "/TZWeatherApp/static/js/main.5b75c6e8.js",
     "static/js/787.f1f9d9bb.chunk.js": "/TZWeatherApp/static/js/787.f1f9d9bb.chunk.js",
     "static/media/icon.jpg": "/TZWeatherApp/static/media/icon.ba18a6871a2cf706cbab.jpg",
     "index.html": "/TZWeatherApp/index.html",
     "main.fb35d48d.css.map": "/TZWeatherApp/static/css/main.fb35d48d.css.map",
-    "main.fa74e791.js.map": "/TZWeatherApp/static/js/main.fa74e791.js.map",
+    "main.5b75c6e8.js.map": "/TZWeatherApp/static/js/main.5b75c6e8.js.map",
     "787.f1f9d9bb.chunk.js.map": "/TZWeatherApp/static/js/787.f1f9d9bb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fb35d48d.css",
-    "static/js/main.fa74e791.js"
+    "static/js/main.5b75c6e8.js"
   ]
 }
