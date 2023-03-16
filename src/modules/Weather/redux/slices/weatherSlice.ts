@@ -4,13 +4,15 @@ import {IForecastData, IHistoricalData} from "../../interfaces";
 export interface WeatherState {
     loading: boolean;
     type: boolean
+    error: boolean
     forecast: IForecastData[];
     history: IHistoricalData[]
 }
 
 const initialState: WeatherState = {
-    loading: true,
+    loading: false,
     type: true,
+    error: false,
     forecast: [],
     history: []
 }
@@ -24,20 +26,34 @@ export const weatherSlice = createSlice({
             state.loading = false
         },
         getWeatherByLocation(state){
-                state.loading = true
+            state.loading = true
         },
         getWeatherByCityName(state, {payload}){
-            state.loading =true
+            state.loading = true
         },
         getWeatherSuccess(state, {payload: {forecast, history}}){
             state.forecast = forecast
             state.history = history
+            state.error = false;
+            state.loading = false;
         },
-        getWeatherFailed(state, {payload: {forecast, history}}){
-            // state.forecast = forecast
-            // state.history = history
+        getWeatherFailed(state){
+            state.forecast = []
+            state.history = []
+            state.loading = false;
+            state.error = true;
+        },
+        getLoadingState(state){
+            state.loading = true;
         }
     },
 })
 
-export const { changeTempType , getWeatherByLocation, getWeatherSuccess, getWeatherByCityName} = weatherSlice.actions
+export const {
+    changeTempType,
+    getWeatherByLocation,
+    getWeatherSuccess,
+    getWeatherByCityName,
+    getWeatherFailed,
+    getLoadingState
+} = weatherSlice.actions

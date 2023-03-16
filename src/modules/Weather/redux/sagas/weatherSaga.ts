@@ -1,14 +1,18 @@
 import {takeEvery, put, call, Effect} from '@redux-saga/core/effects'
-// import {
-//     getNews,
-// } from '../../service/WeatherService'
-// import { getNewsFeedAction } from '../actions/weatherActions'
 import {PayloadAction} from '@reduxjs/toolkit'
-import {getWeatherByCoordinates, getWeatherByCity, getWeatherHistory} from "../../service/WeatherService";
-import {getWeatherByCityName, getWeatherByLocation, getWeatherSuccess} from "../slices/weatherSlice";
+import {
+    getWeatherByCoordinates,
+    getWeatherByCity,
+    getWeatherHistory
+} from "../../service/WeatherService";
+import {
+    getWeatherByCityName,
+    getWeatherByLocation,
+    getWeatherSuccess,
+    getWeatherFailed,
+    getLoadingState
+} from "../slices/weatherSlice";
 import {forecastAdapter, historyAdapter} from "../adapters/weatherAdapter";
-// import { getNewsFeedSuccess } from '../slices/weatherSlice'
-// import { IOrder } from '../../interfaces'
 //
 function* getWeatherByLocationSaga({
                                        payload,
@@ -16,7 +20,6 @@ function* getWeatherByLocationSaga({
     try {
         const data = yield call(getWeatherByCoordinates, payload.latitude, payload.longitude);
         const history = yield call(getWeatherHistory, payload.latitude, payload.longitude);
-        console.log(history)
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         yield put(getWeatherSuccess({forecast: forecastAdapter(data.data.list), history: historyAdapter(history.data)}))
@@ -29,6 +32,7 @@ function* getWeatherByCitySaga({
                                    payload,
                                }: PayloadAction<string>): Generator<Effect> {
     try {
+        yield put(getLoadingState())
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         const data = yield call(getWeatherByCity, payload);
@@ -40,7 +44,7 @@ function* getWeatherByCitySaga({
         //@ts-ignore
         yield put(getWeatherSuccess({forecast: forecastAdapter(data.data.list), history: historyAdapter(history.data)}))
     } catch (error) {
-        yield put({type: 'FETCH_DATA_ERROR', payload: error})
+        yield put(getWeatherFailed())
     }
 }
 

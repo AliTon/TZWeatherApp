@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {List, Spin} from 'antd'
 import Chart from '../components/Chart'
 import Card from '../components/Card'
@@ -7,30 +7,23 @@ import {WeatherStyle} from "./Weather.styles";
 import {useDispatch} from "react-redux";
 import {getWeatherByCityName} from "../redux/slices/weatherSlice";
 import {useAppSelector} from "../../../configureApp/hooks";
-import {selectForecastData, selectHistoricalData} from "../redux/selectors/weatherSelector";
+import {
+    selectError,
+    selectForecastData,
+    selectHistoricalData,
+    selectLoadingState
+} from "../redux/selectors/weatherSelector";
 
 
 function Weather(): JSX.Element {
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
     const dispatch = useDispatch()
     const forecastData = useAppSelector(selectForecastData)
     const historicalData = useAppSelector(selectHistoricalData)
+    const error = useAppSelector(selectError)
+    const loading = useAppSelector(selectLoadingState)
 
     const handleSearchClick = async (city: string): Promise<void> => {
-        if(error){
-            setError(false)
-        }
-        try {
-            setLoading(true);
-
-            dispatch(getWeatherByCityName(city))
-
-        } catch (error) {
-            setError(true)
-        } finally {
-            setLoading(false);
-        }
+        dispatch(getWeatherByCityName(city))
     };
 
 
