@@ -8,9 +8,9 @@ import {
     Tooltip,
     Legend,
 } from 'recharts'
-import {useAppSelector} from "../../configureApp/hooks";
-import {selectTempType} from "../../modules/Weather/redux/selectors/weatherSelector";
-import {tempConvertor} from "../../utils";
+import {useAppSelector} from "../../../configureApp/hooks";
+import {selectTempType} from "../redux/selectors/weatherSelector";
+import {tempConvertor} from "../../../utils";
 
 interface HistoricalData {
     date: string
@@ -35,10 +35,12 @@ const Chart: React.FC<IProps> = ({data = []}) => {
     return (
         <div style={{
             display: 'flex',
-            justifyContent: 'center',
-            background: 'white',
+            flexDirection: 'column',
+            justifyContent: 'start',
+            background: 'black',
             paddingTop: '24px'
         }}>
+            <h1 style={{color: 'white', fontSize: '32px', fontWeight: 600}}>Last days history</h1>
             {data.length > 0 && (
                 <LineChart width={600} height={400} data={dataAdapter(data)}>
                     <CartesianGrid strokeDasharray="3 3"/>

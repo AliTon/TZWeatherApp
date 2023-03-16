@@ -1,8 +1,8 @@
 {
-  "name": "TZ-Weather-app",
+  "name": "tz-weather-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
+  "homepage": "https://AliTon.github.io/TZWeatherApp",
   "dependencies": {
     "@redux-saga/core": "^1.2.2",
     "@reduxjs/toolkit": "^1.9.1",

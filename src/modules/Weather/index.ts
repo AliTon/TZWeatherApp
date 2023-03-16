@@ -3,7 +3,7 @@ export { weatherSlice } from './redux/slices/weatherSlice'
 export {watchFetchWeather } from './redux/sagas/weatherSaga'
 
 // PAGES
-export { default as MainPage } from './pages/Main'
+export { default as Weather } from './pages/Weather'
 
 //Interfaces
 

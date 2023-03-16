@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from '@redux-saga/core'
 import rootSaga from './rootSaga'
-import {weatherSlice} from "../modules/Weather/redux/slices/weatherSlice";
+import {weatherSlice} from "../modules/Weather";
 
 const sagaMiddleware = createSagaMiddleware()
 

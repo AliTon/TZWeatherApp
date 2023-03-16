@@ -1,10 +1,9 @@
 import React from 'react'
-import {Card, Divider} from 'antd'
-import {useAppSelector} from "../../configureApp/hooks";
-import {selectTempType} from "../../modules/Weather/redux/selectors/weatherSelector";
-import {IForecastData} from "../../modules/Weather";
+import {useAppSelector} from "../../../configureApp/hooks";
+import {selectTempType} from "../redux/selectors/weatherSelector";
+import {IForecastData} from "../index";
 import {CardStyle} from "./Card.style";
-import {formatDateIfExists, tempConvertor} from '../../utils';
+import {formatDateIfExists, tempConvertor} from '../../../utils';
 
 
 interface IProps {
@@ -49,19 +48,6 @@ const Chart: React.FC<IProps> = ({ item = {}, style = {} }) => {
                             <span>pressure</span>{`:... ${item.pressure} MB`}
                         </div>
                     </div>
-
-                    {/*<Meta*/}
-                    {/*    title={item.date}*/}
-                    {/*    description={*/}
-                    {/*        <div className="description">{tempType ? item.temperature : 'barev'}</div>*/}
-                    {/*    }*/}
-                    {/*/>*/}
-                    {/*<Meta*/}
-                    {/*    title={item.date}*/}
-                    {/*    description={*/}
-                    {/*        <div className="description">{tempType ? item.temperature : 'barev'}</div>*/}
-                    {/*    }*/}
-                    {/*/>*/}
                 </div>
 
             </div>

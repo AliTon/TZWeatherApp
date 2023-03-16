@@ -1,13 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
+import {IForecastData, IHistoricalData} from "../../interfaces";
 
-export interface NewsState {
-    loading: boolean
+export interface WeatherState {
+    loading: boolean;
     type: boolean
+    forecast: IForecastData[];
+    history: IHistoricalData[]
 }
 
-const initialState: NewsState = {
+const initialState: WeatherState = {
     loading: true,
     type: true,
+    forecast: [],
+    history: []
 }
 
 export const weatherSlice = createSlice({
@@ -18,7 +23,21 @@ export const weatherSlice = createSlice({
             state.type = payload
             state.loading = false
         },
+        getWeatherByLocation(state){
+                state.loading = true
+        },
+        getWeatherByCityName(state, {payload}){
+            state.loading =true
+        },
+        getWeatherSuccess(state, {payload: {forecast, history}}){
+            state.forecast = forecast
+            state.history = history
+        },
+        getWeatherFailed(state, {payload: {forecast, history}}){
+            // state.forecast = forecast
+            // state.history = history
+        }
     },
 })
 
-export const { changeTempType } = weatherSlice.actions
+export const { changeTempType , getWeatherByLocation, getWeatherSuccess, getWeatherByCityName} = weatherSlice.actions
