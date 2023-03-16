@@ -11,8 +11,6 @@ interface IProps {
     item?: IForecastData
 }
 const Chart: React.FC<IProps> = ({ item = {} }) => {
-    const { Meta } = Card
-
     const tempType = useAppSelector(selectTempType)
 
 
@@ -36,7 +34,7 @@ const Chart: React.FC<IProps> = ({ item = {} }) => {
                 <div className='card-body'>
                     <div className='divider'/>
                     <div className='card-content'>
-                        {tempConvertor(item.temperature as number, tempType)}
+                        {`${tempConvertor(item.temperature as number, tempType)} ${tempType ?  '(°C)':  '(°F)'}`}
                     </div>
                     <div className='card-info'>
                         <div>{item.description}</div>

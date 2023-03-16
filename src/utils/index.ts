@@ -12,9 +12,9 @@ export const tempConvertor = (temp: number, type: boolean) => {
     if(temp){
         if(!type){
             const fahrenheit = (+(temp * 1.8 + 32).toFixed(2) / 100) * 100;
-            return `${fahrenheit} (°F)`;
+            return +`${fahrenheit}`;
         } else {
-            return `${temp} (°C)`;
+            return +`${temp}`;
         }
     }
 

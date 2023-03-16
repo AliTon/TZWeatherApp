@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import {
     LineChart,
     Line,
@@ -8,6 +8,9 @@ import {
     Tooltip,
     Legend,
 } from 'recharts'
+import {useAppSelector} from "../../configureApp/hooks";
+import {selectTempType} from "../../modules/Weather/redux/selectors/weatherSelector";
+import {tempConvertor} from "../../utils";
 
 interface HistoricalData {
     date: string
@@ -18,10 +21,25 @@ interface IProps {
 }
 
 const Chart: React.FC<IProps> = ({data = []}) => {
+    console.log(data, ">>>>>>>>>>>>>>>>>>>>>>>>data")
+    const tempType = useAppSelector(selectTempType)
+
+    const dataAdapter = useCallback((data: HistoricalData[]) => {
+        return data.map((item) => {
+            return {
+                temperature: tempConvertor(item.temperature, tempType),
+                date: item.date
+            }
+        })
+    }, [tempType])
+
+    console.log(dataAdapter(data), ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>dataAdapter(data)")
+    console.log(data, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>(data)")
+
     return (
         <div style={{display: 'flex', justifyContent: 'center', background: 'white'}}>
             {data.length > 0 && (
-                <LineChart width={600} height={400} data={data}>
+                <LineChart width={600} height={400} data={dataAdapter(data)}>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis dataKey="date"/>
                     <YAxis/>

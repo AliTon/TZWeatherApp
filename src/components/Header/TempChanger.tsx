@@ -50,10 +50,10 @@ const TempTypeChanger: React.FC = () => {
     return (
         <TempTypeChangerStyle>
             <div className={type ? 'active' : 'inactive'} onClick={() => setType(true)}>
-                C
+                °C
             </div>
             <div className={!type ? 'active' : 'inactive'} onClick={() => setType(false)}>
-                F
+                °F
             </div>
         </TempTypeChangerStyle>
     );
