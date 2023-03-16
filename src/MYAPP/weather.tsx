@@ -15,7 +15,8 @@ function Weather(): JSX.Element {
 
     const handleSearchClick = async (city: string): Promise<void> => {
         try {
-            setLoading(true)
+            setLoading(true);
+
             // Get the forecast data for the specified city
             const forecastResponse = await fetch(
                 `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
@@ -28,7 +29,9 @@ function Weather(): JSX.Element {
                     const itemDate = new Date(item.dt_txt);
                     return (
                         index % 8 === 0 && // Only include data for 12:00:00 for each day
-                        itemDate <= new Date(currentDate.setDate(currentDate.getDate() + 4)) // Only include data for the next 5 days
+                        itemDate <= new Date(
+                            currentDate.setDate(currentDate.getDate() + 4)
+                        ) // Only include data for the next 5 days
                     );
                 })
                 .map((item: any, index: number) => ({
@@ -40,16 +43,33 @@ function Weather(): JSX.Element {
                     main: item.weather[0].main,
                     speed: item.wind.speed,
                     icon: `https://openweathermap.org/img/w/${item.weather[0].icon}.png`,
-                    index
+                    index,
                 }));
-            setForecastData(filteredForecastData)
+            setForecastData(filteredForecastData);
 
+            const currentDate = new Date();
+            const pastDate = new Date(currentDate.setDate(currentDate.getDate() - 5)); // 5 days ago
+            const pastTimestamp = Math.floor(pastDate.getTime() / 1000); // Convert to UNIX timestamp
+
+            const { city: { coord } } = forecastData;
+
+            // Get the historical weather data for the specified city
+            const historicalResponse = await fetch(
+                `https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${coord.lat}&lon=${coord.lon}&dt=${pastTimestamp}&units=metric&appid=${apiKey}`
+            );
+            const historicalData = await historicalResponse.json();
+            const historicalWeatherData = historicalData.hourly.map((item: any) => ({
+                date: new Date(item.dt * 1000).toLocaleDateString(),
+                temperature: item.temp,
+            }));
+            setHistoricalData(historicalWeatherData);
         } catch (error) {
             console.error(error);
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
+
 
 
 
@@ -58,6 +78,9 @@ function Weather(): JSX.Element {
             console.log('Historical data:', historicalData)
         }
     }, [forecastData, historicalData])
+
+    console.log(historicalData, ">>>>>>>>>>>>>>>>> historicalData")
+
 
     return (
         <WeatherStyle>
@@ -68,31 +91,31 @@ function Weather(): JSX.Element {
                 marginTop: '40px'
             }}><Spin size="large" /></div>}
             {forecastData.length > 0 && (
-                <>
-                    <List
-                        grid={{
-                            gutter: 16,
-                            xs: 1,
-                            sm: 2,
-                            md: 3,
-                            lg: 4,
-                            xl: 5,
-                            xxl: 5,
-                        }}
-                        dataSource={forecastData}
+                <List
+                    grid={{
+                        gutter: 16,
+                        xs: 1,
+                        sm: 2,
+                        md: 3,
+                        lg: 4,
+                        xl: 5,
+                        xxl: 5,
+                    }}
+                    dataSource={forecastData}
 
-                        renderItem={(item) => (
-                            <div style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                borderRadius: '30px'
-                            }}>
-                                <Cards item={item} />
-                            </div>
-                        )}
-                    />
-                    <Chart data={historicalData || []} />
-                </>
+                    renderItem={(item) => (
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            borderRadius: '30px'
+                        }}>
+                            <Cards item={item}/>
+                        </div>
+                    )}
+                />
+            )}
+            {historicalData.length > 0 && (
+                <Chart data={historicalData || []}/>
             )}
         </WeatherStyle>
     )
