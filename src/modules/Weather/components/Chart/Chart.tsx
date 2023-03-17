@@ -15,8 +15,6 @@ import { ChartStyle } from './Chart.style';
 
 interface HistoricalData {
     date: string;
-
-    time?: string;
     temperature: number;
 }
 
@@ -34,14 +32,13 @@ const Chart: React.FC<IProps> = ({ data = [] }) => {
         (data: HistoricalData[]) => {
             return data.map((item) => {
                 return {
-                    temperature: `${tempConvertor(item.temperature, tempType)} ${tempType ?  '(°C)':  '(°F)'}`,
+                    temperature: tempConvertor(item.temperature, tempType),
                     date: item.date,
                 };
             });
         },
         [tempType],
     );
-
 
     useLayoutEffect(() => {
         function handleResize() {
