@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {List, Spin} from 'antd'
-import Chart from '../components/Chart'
+import Chart from '../components/Chart/Chart'
 import Card from '../components/Card/Card'
 import Search from "../components/Search/Search";
 import {WeatherStyle} from "./Weather.styles";

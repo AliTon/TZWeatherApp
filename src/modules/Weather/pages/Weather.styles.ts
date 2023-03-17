@@ -23,5 +23,8 @@ export const WeatherStyle = styled.div`
     padding: 4px 20px;
     font-weight: 700;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `

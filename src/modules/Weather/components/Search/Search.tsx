@@ -37,7 +37,7 @@ const Search: React.FC<IProps> = ({ handleSearchClick, setCity }) => {
                         <input type="text" placeholder="Search City..." {...field} />
                     )}
                 />
-                {errors.city && <span>This field is required</span>}
+                {errors.city && <span>Required field*</span>}
                 <button type="submit">Search</button>
             </form>
         </SearchStyle>
