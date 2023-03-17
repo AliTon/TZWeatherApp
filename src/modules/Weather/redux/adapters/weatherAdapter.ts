@@ -26,9 +26,15 @@ export const forecastAdapter = (data: IForecastData[], name: string) => {
         }));
 }
 
-export const historyAdapter = (data: any) => {
-    return data.hourly.map((item: any) => ({
-            date: new Date(item.dt * 1000).toLocaleDateString(),
-            temperature: item.temp,
-        }));
+export const historyAdapter = (datas: unknown[]) => {
+    const result: any = []
+    datas.forEach((data: any) => {
+        data.hourly.forEach((item: any) => {
+            result.push({
+                date: new Date(item.dt * 1000).toLocaleDateString(),
+                temperature: item.temp,
+            })
+        })
+    })
+    return result
 }

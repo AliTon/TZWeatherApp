@@ -11,6 +11,7 @@ export const ChartStyle = styled.div`
     color: white;
     font-size: 32px;
     font-weight: 600;
-    margin-left: 32px
+    margin-left: 60px;
+    margin-bottom: 20px;
   }
 `

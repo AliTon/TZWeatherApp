@@ -15,9 +15,9 @@ export const getWeatherByCity = (city: string) => {
 }
 
 
-export const getWeatherHistory = (lat: number, lon: number) => {
+export const getWeatherHistory = (lat: number, lon: number, day: number) => {
     const currentDate = new Date();
-    const pastDate = new Date(currentDate.setDate(currentDate.getDate() - 5)); // 5 days ago
+    const pastDate = new Date(currentDate.setDate(currentDate.getDate() - day )); // 5 days ago
     const pastTimestamp = Math.floor(pastDate.getTime() / 1000); // Convert to UNIX timestamp
 
     return axiosInstance.get(`/onecall/timemachine`, {

@@ -1,4 +1,4 @@
-import {takeEvery, put, call, Effect} from '@redux-saga/core/effects'
+import {takeEvery, put, call, Effect, all} from '@redux-saga/core/effects'
 import {PayloadAction} from '@reduxjs/toolkit'
 import {
     getWeatherByCoordinates,
@@ -19,10 +19,17 @@ function* getWeatherByLocationSaga({
                                    }: PayloadAction<GeolocationCoordinates>): Generator<Effect> {
     try {
         const data = yield call(getWeatherByCoordinates, payload.latitude, payload.longitude);
-        const history = yield call(getWeatherHistory, payload.latitude, payload.longitude);
+        const history = yield all([
+            call(getWeatherHistory, payload.latitude, payload.longitude, 5),
+            call(getWeatherHistory, payload.latitude, payload.longitude, 4),
+            call(getWeatherHistory, payload.latitude, payload.longitude, 3),
+            call(getWeatherHistory, payload.latitude, payload.longitude, 2),
+            call(getWeatherHistory, payload.latitude, payload.longitude, 1),
+        ]);
         //@ts-ignore
-        yield put(getWeatherSuccess({forecast: forecastAdapter(data.data.list, data.data.city.name), history: historyAdapter(history.data)}))
+        yield put(getWeatherSuccess({forecast: forecastAdapter(data.data.list, data.data.city.name), history: historyAdapter(history.map(h => h.data))}))
     } catch (error) {
+        console.log(error)
         yield put({type: 'FETCH_DATA_ERROR', payload: error})
     }
 }

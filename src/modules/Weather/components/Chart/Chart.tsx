@@ -15,6 +15,8 @@ import { ChartStyle } from './Chart.style';
 
 interface HistoricalData {
     date: string;
+
+    time?: string;
     temperature: number;
 }
 
@@ -32,13 +34,14 @@ const Chart: React.FC<IProps> = ({ data = [] }) => {
         (data: HistoricalData[]) => {
             return data.map((item) => {
                 return {
-                    temperature: tempConvertor(item.temperature, tempType),
+                    temperature: `${tempConvertor(item.temperature, tempType)} ${tempType ?  '(°C)':  '(°F)'}`,
                     date: item.date,
                 };
             });
         },
         [tempType],
     );
+
 
     useLayoutEffect(() => {
         function handleResize() {
@@ -56,7 +59,7 @@ const Chart: React.FC<IProps> = ({ data = [] }) => {
 
     return (
         <ChartStyle>
-            <div className="weather_chart_title">Last days history</div>
+            <div className="weather_chart_title">Weather history</div>
             {data.length > 0 && (
                 <div className="chart_container" ref={chartRef}>
                     <LineChart width={chartWidth} height={chartHeight} data={dataAdapter(data)}>
