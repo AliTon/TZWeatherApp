@@ -37,7 +37,7 @@ function Weather(): JSX.Element {
                 :
                 <>
                     {
-                        error ? <div className='error_message'>Something want wrong!!!</div> : <>
+                        error ? <div className='error_message'>Invalid city name or something happened during fetching data!!!</div> : <>
                             {forecastData.length > 0 && (
                                 <>
                                     <div className='weather_city'>Weather of {forecastData[0].name || city}</div>

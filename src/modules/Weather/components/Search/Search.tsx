@@ -12,7 +12,9 @@ type FormData = {
 };
 
 const Search: React.FC<IProps> = ({ handleSearchClick, setCity }) => {
-    const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
+        defaultValues: { city: '' },
+    });
     const [previousValue, setPreviousValue] = useState<string>("");
 
     const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
