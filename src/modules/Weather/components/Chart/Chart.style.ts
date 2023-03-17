@@ -6,8 +6,7 @@ export const ChartStyle = styled.div`
   flex-direction: column;
   justify-content: start;
   background: black;
-  padding: 24px 20px;
-  margin: 4px -20px 0 0;
+  margin: 30px 0 0 -30px;
   .weather_chart_title {
     color: white;
     font-size: 32px;
