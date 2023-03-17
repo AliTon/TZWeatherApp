@@ -10,7 +10,7 @@ const TempTypeChangerStyle = styled.div`
   justify-content: center;
   font-size: 20px;
   font-weight: bold;
-  margin-right: 20px;
+  margin-right: 40px;
   border-radius: 50px;
   div {
     height: 50px;
