@@ -3,7 +3,8 @@ import styled from 'styled-components'
 export const SearchStyle = styled.div`
   background-color: #1e1e1e;
   border-radius: 24px;
-  margin-bottom: 24px;
+  margin: 0 24px 24px 24px;
+  width: 360px;
   .twitter-search-input {
     display: flex;
     align-items: center;
@@ -27,9 +28,8 @@ export const SearchStyle = styled.div`
     border: none;
     border-radius: 24px;
     padding: 6px 12px;
-    font-size: 16px;
-    font-weight: bold;
-    margin-left: 12px;
+    font-size: 12px;
+    font-weight: 500;
     cursor: pointer;
   }
 
