@@ -43,7 +43,7 @@ const Chart: React.FC<IProps> = ({ data = [] }) => {
     useLayoutEffect(() => {
         function handleResize() {
             if (chartRef.current) {
-                const width = chartRef.current.offsetWidth;
+                const width = chartRef.current.offsetWidth * 0.8;
                 const height = Math.min(width * 0.6, window.innerHeight * 0.6);
                 setChartWidth(width);
                 setChartHeight(height);
