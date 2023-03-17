@@ -2,7 +2,7 @@ import {AxiosPromise, AxiosResponse} from "axios";
 import {WEATHER_API_KEY} from "../../../configs/constants";
 import axiosInstance from "../../../configureApp/axiosInstance";
 
-export const getWeatherByCoordinates = (lat: number, lon: number): AxiosPromise<AxiosResponse<{list: any}>> => {
+export const getWeatherByCoordinates = (lat: number, lon: number): AxiosPromise<AxiosResponse> => {
     return axiosInstance.get(`/forecast`, {
         params: {lat, lon, appid: WEATHER_API_KEY, units: "metric"}
     });

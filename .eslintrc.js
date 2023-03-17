@@ -3,6 +3,7 @@ module.exports = {
     extends: ['react-app', 'plugin:@typescript-eslint/recommended'],
     plugins: ['@typescript-eslint', 'react', 'react-hooks'],
     rules: {
-        // your custom rules here
+        '@typescript-eslint/ban-ts-comment': "off",
+        '@typescript-eslint/no-non-null-assertion': "off"
     },
 }

@@ -1,5 +1,7 @@
-export const forecastAdapter = (data: any, name: string) => {
-    return data.filter((item: any, index: number) => {
+import {IForecastData} from "../../interfaces";
+
+export const forecastAdapter = (data: IForecastData[], name: string) => {
+    return data.filter((item: IForecastData, index: number) => {
         // Only include data for the next 5 days (starting from tomorrow)
         const currentDate = new Date();
         const itemDate = new Date(item.dt_txt);

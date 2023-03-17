@@ -8,9 +8,8 @@ import {formatDateIfExists, tempConvertor} from '../../../../utils';
 
 interface IProps {
     item: IForecastData
-    style?: any
 }
-const Chart: React.FC<IProps> = ({ item = {}, style = {} }) => {
+const Chart: React.FC<IProps> = ({ item = {} }) => {
     const tempType = useAppSelector(selectTempType)
 
 
