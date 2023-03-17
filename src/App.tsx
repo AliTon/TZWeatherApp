@@ -27,7 +27,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route element={<MainLayout />}>
-                    <Route index element={<Weather />} />
+                    <Route path="*" element={<Weather />} />
                 </Route>
             </Routes>
         </BrowserRouter>

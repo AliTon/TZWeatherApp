@@ -9,6 +9,3 @@ export { default as Weather } from './pages/Weather'
 
 export * from './interfaces'
 
-//STYLES
-
-export * from './styles/index.styled'

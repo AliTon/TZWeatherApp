@@ -7,6 +7,7 @@ export interface IForecastData {
     pressure: number
     description: string
     main: string
+    name: string
     speed: number
 }
 export interface IHistoricalData {

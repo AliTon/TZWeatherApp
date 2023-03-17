@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {List, Spin} from 'antd'
 import Chart from '../components/Chart'
-import Card from '../components/Card'
-import Search from "../components/Search";
+import Card from '../components/Card/Card'
+import Search from "../components/Search/Search";
 import {WeatherStyle} from "./Weather.styles";
 import {useDispatch} from "react-redux";
 import {getWeatherByCityName} from "../redux/slices/weatherSlice";
@@ -17,6 +17,7 @@ import {
 
 function Weather(): JSX.Element {
     const dispatch = useDispatch()
+    const [city, setCity] = useState('');
     const forecastData = useAppSelector(selectForecastData)
     const historicalData = useAppSelector(selectHistoricalData)
     const error = useAppSelector(selectError)
@@ -26,48 +27,41 @@ function Weather(): JSX.Element {
         dispatch(getWeatherByCityName(city))
     };
 
-
     return (
         <WeatherStyle>
-            <Search handleSearchClick={handleSearchClick}/>
+            <Search handleSearchClick={handleSearchClick} setCity={setCity}/>
             {loading ?
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginTop: '40px'
-                }}>
+                <div className="weather_spin">
                     <Spin size="large"/>
                 </div>
                 :
                 <>
                     {
-                        error ? <div style={{
-                            fontSize: '24px',
-                            fontWeight: 700,
-                            color: 'red'
-                        }}>Something want wrong!!!</div> : <>
+                        error ? <div className='error_message'>Something want wrong!!!</div> : <>
                             {forecastData.length > 0 && (
-                                <List
-                                    grid={{
-                                        gutter: 16,
-                                        xs: 1,
-                                        sm: 2,
-                                        md: 3,
-                                        lg: 4,
-                                        xl: 5,
-                                        xxl: 5,
-                                    }}
-                                    dataSource={forecastData}
+                                <>
+                                    <div className='weather_city'>Weather of {forecastData[0].name || city}</div>
 
-                                    renderItem={(item) => (
-                                        <div style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                        }}>
-                                            <Card item={item}/>
-                                        </div>
-                                    )}
-                                />
+                                    <List
+                                        grid={{
+                                            gutter: 16,
+                                            xs: 1,
+                                            sm: 2,
+                                            md: 3,
+                                            lg: 4,
+                                            xl: 5,
+                                            xxl: 5,
+                                        }}
+                                        dataSource={forecastData}
+
+                                        renderItem={(item) => (
+                                            <div className="weather_card_container">
+                                                <Card item={item}/>
+                                            </div>
+                                        )}
+                                    />
+                                </>
+
                             )}
                             {historicalData.length > 0 && (
                                 <Chart data={historicalData || []}/>

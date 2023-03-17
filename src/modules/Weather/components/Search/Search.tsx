@@ -4,19 +4,21 @@ import { SearchStyle } from './Search.style';
 
 interface IProps {
     handleSearchClick: (city: string) => void;
+    setCity: (city: string) => void;
 }
 
 type FormData = {
     city: string;
 };
 
-const Search: React.FC<IProps> = ({ handleSearchClick }) => {
+const Search: React.FC<IProps> = ({ handleSearchClick, setCity }) => {
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [previousValue, setPreviousValue] = useState<string>("");
 
     const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
         if (data.city !== previousValue) {
             setPreviousValue(data.city);
+            setCity(data.city);
             handleSearchClick(data.city);
         }
     };

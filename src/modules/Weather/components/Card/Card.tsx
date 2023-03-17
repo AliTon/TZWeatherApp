@@ -1,9 +1,9 @@
 import React from 'react'
-import {useAppSelector} from "../../../configureApp/hooks";
-import {selectTempType} from "../redux/selectors/weatherSelector";
-import {IForecastData} from "../index";
+import {useAppSelector} from "../../../../configureApp/hooks";
+import {selectTempType} from "../../redux/selectors/weatherSelector";
+import {IForecastData} from "../../index";
 import {CardStyle} from "./Card.style";
-import {formatDateIfExists, tempConvertor} from '../../../utils';
+import {formatDateIfExists, tempConvertor} from '../../../../utils';
 
 
 interface IProps {

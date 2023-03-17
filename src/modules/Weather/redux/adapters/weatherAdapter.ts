@@ -1,4 +1,4 @@
-export const forecastAdapter = (data: any) => {
+export const forecastAdapter = (data: any, name: string) => {
     return data.filter((item: any, index: number) => {
         // Only include data for the next 5 days (starting from tomorrow)
         const currentDate = new Date();
@@ -20,6 +20,7 @@ export const forecastAdapter = (data: any) => {
             speed: item.wind.speed,
             icon: `https://openweathermap.org/img/w/${item.weather[0].icon}.png`,
             index,
+            name,
         }));
 }
 

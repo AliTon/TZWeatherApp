@@ -22,7 +22,7 @@ function* getWeatherByLocationSaga({
         const history = yield call(getWeatherHistory, payload.latitude, payload.longitude);
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
-        yield put(getWeatherSuccess({forecast: forecastAdapter(data.data.list), history: historyAdapter(history.data)}))
+        yield put(getWeatherSuccess({forecast: forecastAdapter(data.data.list, data.data.city.name), history: historyAdapter(history.data)}))
     } catch (error) {
         yield put({type: 'FETCH_DATA_ERROR', payload: error})
     }
@@ -36,7 +36,6 @@ function* getWeatherByCitySaga({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         const data = yield call(getWeatherByCity, payload);
-        // console.log({data})
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         const history = yield call(getWeatherHistory, data.data.city.coord.lat, data.data.city.coord.lon);
